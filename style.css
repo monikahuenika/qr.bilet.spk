@@ -58,7 +58,7 @@ main{
 .numberRub{
     margin-top: 0.7%;
     margin-bottom: 1.45%;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Circle', sans-serif;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -67,14 +67,14 @@ main{
     color: rgb(23, 6, 68);
 }
 .twoNine{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Circle', sans-serif;
     font-weight: 200;
     font-size: 100%;
 }
 .dataAndNowTime{
     margin-top: 3.1%;
     letter-spacing: 0.2px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Circle', sans-serif;
     font-size: 105%;
     font-weight: 450;
     text-align: center;
@@ -97,7 +97,7 @@ main{
 }
 .timeOldNumber{
     cursor: pointer;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Circle', sans-serif;
     text-align: center;
     color: rgb(25, 7, 73);
     font-weight: 600;
@@ -126,7 +126,7 @@ main{
     letter-spacing: 0.2px;
 }
 .numberSeriesTikets{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Circle', sans-serif;
     font-size: 18px;
     font-weight: 600;
 }
@@ -138,7 +138,7 @@ main{
     letter-spacing: 0.2px;
 }
 .numberTiketNam{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Circle', sans-serif;
     font-size: 18px;
     font-weight: 600;
 }
@@ -249,7 +249,7 @@ main{
     cursor: text;
     border: none;
     font-size: 119%;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Circle', sans-serif;
     font-weight: 600;
     letter-spacing: 0.0px;
     color: rgb(21, 5, 65);
