@@ -110,7 +110,7 @@ main{
     z-index: 1;
     width: 100%;
     height: 23em;
-    background: rgb(255, 253, 247);
+    background: #F5F1E8;
 }
 .QR-code img{
     width: 94%;
