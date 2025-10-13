@@ -21,11 +21,11 @@ main{
     justify-content: center;
     align-items: center;
     color: #F5F1E8;
-    background: rgb(19, 5, 56);
+    background: #1d1346;
     font-size: 105%;
     letter-spacing: 0.2px;
     font-weight: 550;
-    height: 43px;
+    height: 56px;
 }
 .imgSbp{
     display: flex;
