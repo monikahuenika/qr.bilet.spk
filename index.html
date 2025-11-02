@@ -4,9 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>qr.bilet.nspk.ru/result?</title>
+
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.webmanifest">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- iOS (без иконок) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(() => console.log('✅ Service Worker зарегистрирован'))
+                .catch(err => console.error('❌ Ошибка регистрации SW:', err));
+        });
+    }
+</script>
 <body>
     <div class="colorFonts" id="colorFonts"></div>
     <main class="head">

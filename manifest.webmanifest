@@ -1,0 +1,9 @@
+{
+  "name": "QR.Bilet.SPK",
+  "short_name": "QR Bilet",
+  "start_url": "/qr.bilet.spk/",
+  "scope": "/qr.bilet.spk/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff"
+}
