@@ -282,3 +282,15 @@ main{
     margin-left: 28%;
     height: 24px;
 }
+#tcInput{
+    display: none;
+    width: 80px;
+    border: none;
+    outline: none;
+    font-size: 95%;
+    font-family: 'Circle', sans-serif;
+    font-weight: 600;
+    background: transparent;
+    text-align: left;
+    color: rgb(33, 7, 80);
+}

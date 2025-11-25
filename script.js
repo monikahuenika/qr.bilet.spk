@@ -94,6 +94,37 @@ timeOldNumber.addEventListener(('click'), () => {
     timeFu()
 })
 
+// ----- Редактирование Т/С -----
+const tc = document.getElementById('tc');
+const tcValue = document.getElementById('tcValue');
+const tcInput = document.getElementById('tcInput');
+
+const showTcInput = () => {
+    tcInput.style.display = 'inline-block';
+    tcInput.value = tcValue.textContent.trim();
+    tcValue.style.display = 'none';
+    tcInput.focus();
+};
+
+const hideTcInput = () => {
+    tcValue.textContent = tcInput.value.trim() || tcValue.textContent;
+    tcInput.style.display = 'none';
+    tcValue.style.display = 'inline';
+};
+
+// Клик по блоку Т/С — включаем редактирование
+tc.addEventListener('click', showTcInput);
+
+// При потере фокуса — сохраняем и скрываем инпут
+tcInput.addEventListener('blur', hideTcInput);
+
+// По Enter тоже сохраняем
+tcInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        tcInput.blur();
+    }
+});
+
 
 
 
