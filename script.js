@@ -1,105 +1,132 @@
-let colorFonts = document.getElementById('colorFonts')
-let boxStartQr = document.getElementById('boxStartQr')
-const numberCar = document.getElementById('numberCar')
+// Оверлей "сохраните билет"
+const colorFonts = document.getElementById('colorFonts');
+const boxStartQr = document.getElementById('boxStartQr');
+const btnSaveTiketStart = document.getElementById('btnSaveTiketStart');
 
+btnSaveTiketStart.addEventListener('click', () => {
+    colorFonts.style.display = 'none';
+    boxStartQr.style.display = 'none';
+});
 
-const btnSaveTiketStart = document.getElementById('btnSaveTiketStart')
-btnSaveTiketStart.addEventListener(('click'), () => {
-    colorFonts.style.display = 'none'
-    boxStartQr.style.display = 'none'
-})
+// Номер маршрута (редактирование)
+const numberCar = document.getElementById('numberCar');
+const impunFl = document.getElementById('impunFl');
 
-const impunFl = document.getElementById('impunFl')
+// Сделаем функции доступными для inline-обработчиков в HTML
+window.showInput = () => {
+    impunFl.style.display = 'block';
+    impunFl.value = numberCar.textContent.trim();
+    impunFl.focus();
+    numberCar.style.display = 'none';
+};
 
-const showInput = () => {
-    impunFl.style.display = 'block'
-    impunFl.focus()
-    numberCar.style.display = 'none'
-}
+window.hideInput = () => {
+    impunFl.style.display = 'none';
+    numberCar.style.display = 'block';
+};
 
-const hideInput = () => {
-    impunFl.style.display = 'none'
-    numberCar.style.display = 'block'
-}
-
-const updateDisplay = () => {
+window.updateDisplay = () => {
     numberCar.textContent = impunFl.value;
-}
+    updateTCByRules();
+};
 
-showInput()
-hideInput()
-updateDisplay()
+// Выбор вида транспорта
+const car = document.getElementById('car');
+const menuCar = document.getElementById('menuCar');
+const btnMenuOne = document.getElementById('btnMenuOne');   // Трамвай
+const btnMenuTwo = document.getElementById('btnMenuTwo');   // Тролейбус
+const btnMenuThree = document.getElementById('btnMenuThree'); // Автобус
 
+car.addEventListener('click', () => {
+    menuCar.style.display = 'flex';
+});
 
-let car = document.getElementById('car')
-const menuCar = document.getElementById('menuCar')
-const btnMenuOne = document.getElementById('btnMenuOne')
-const btnMenuTwo = document.getElementById('btnMenuTwo')
-const btnMenuThree = document.getElementById('btnMenuThree')
-car.addEventListener(('click'), () => {
-    menuCar.style.display = 'flex'
-})
+btnMenuOne.addEventListener('click', () => {
+    car.innerText = 'Трамвай';
+    menuCar.style.display = 'none';
+    updateTCByRules();
+});
 
-btnMenuOne.addEventListener(('click'), () => {
-    car.innerText = 'Трамвай'
-    menuCar.style.display = 'none'
-})
-btnMenuTwo.addEventListener(('click'), () => {
-    car.innerText = 'Тролейбус'
-    menuCar.style.display = 'none'
-})
-btnMenuThree.addEventListener(('click'), () => {
-    car.innerText = 'Автобус'
-    menuCar.style.display = 'none'
-})
+btnMenuTwo.addEventListener('click', () => {
+    car.innerText = 'Тролейбус';
+    menuCar.style.display = 'none';
+    updateTCByRules();
+});
 
-let DataTime = document.getElementById('DataTime');
+btnMenuThree.addEventListener('click', () => {
+    car.innerText = 'Автобус';
+    menuCar.style.display = 'none';
+    updateTCByRules();
+});
 
+// Дата и время
+const DataTime = document.getElementById('DataTime');
 
 const nowFu = () => {
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Месяцы начинаются с 0
-            const year = now.getFullYear();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const dateTimeString = `${day}.${month}.${year} ${hours}:${minutes}`; // Собираем строку
-            DataTime.innerText = dateTimeString            
-}
-DataTime.addEventListener(('click'), () => {
-    nowFu()
-})
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const dateTimeString = `${day}.${month}.${year} ${hours}:${minutes}`;
+    DataTime.innerText = dateTimeString;
+};
 
+DataTime.addEventListener('click', () => {
+    nowFu();
+});
 
+// Таймер "С момента оплаты прошло"
 let timerInterval;
 let seconds = 0;
-timeOldNumber = document.getElementById('timeOldNumber')
+const timeOldNumber = document.getElementById('timeOldNumber');
 
 const timeFu = () => {
-    clearInterval(timerInterval); // Очищаем предыдущий таймер, если он есть
-    seconds = 30; // Начинаем с 1 минуты
+    clearInterval(timerInterval);
+    seconds = 30; // начинаем с 30 секунд
 
-    timerInterval = setInterval(function() {
-        const minutes = Math.floor(seconds / 60); // Увеличиваем на 1, чтобы минуты начинались с 1
+    timerInterval = setInterval(() => {
+        const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
-
-        // Формируем строку времени
         const timeString = `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-        seconds ++;
-        timeOldNumber.innerText = timeString
-},1000);
-}
+        seconds++;
+        timeOldNumber.innerText = timeString;
+    }, 1000);
+};
 
-timeOldNumber.addEventListener(('click'), () => {
-    timeFu()
-})
+timeOldNumber.addEventListener('click', () => {
+    timeFu();
+});
 
-// ----- Редактирование Т/С -----
+// --- ЛОГИКА Т/С ---
+
 const tc = document.getElementById('tc');
 const tcValue = document.getElementById('tcValue');
 const tcInput = document.getElementById('tcInput');
 
+let isManualTc = false; // если пользователь сам ввёл Т/С, правила больше не трогаем
+
+// Автоподстановка Т/С по правилам
+const updateTCByRules = () => {
+    if (isManualTc) return; // не трогаем, если пользователь уже вручную редактировал
+
+    const transport = car.innerText.replace(':', '').trim();   // "Автобус", "Трамвай", "Тролейбус"
+    const route = numberCar.textContent.trim();                // номер маршрута
+
+    if (transport === 'Трамвай' && route === '18') {
+        tcValue.textContent = '852';
+    } else if (transport === 'Трамвай' && route === '2') {
+        tcValue.textContent = '033';
+    } else {
+        // можно оставить как есть, без сброса
+        // tcValue.textContent = '1240';
+    }
+};
+
+// Редактирование Т/С вручную по клику
 const showTcInput = () => {
+    isManualTc = true;
     tcInput.style.display = 'inline-block';
     tcInput.value = tcValue.textContent.trim();
     tcValue.style.display = 'none';
@@ -107,29 +134,28 @@ const showTcInput = () => {
 };
 
 const hideTcInput = () => {
-    tcValue.textContent = tcInput.value.trim() || tcValue.textContent;
+    const val = tcInput.value.trim();
+    if (val) {
+        tcValue.textContent = val;
+        isManualTc = true;
+    } else {
+        // если пользователь стер всё — вернём управление правилам
+        isManualTc = false;
+        updateTCByRules();
+    }
     tcInput.style.display = 'none';
     tcValue.style.display = 'inline';
 };
 
-// Клик по блоку Т/С — включаем редактирование
 tc.addEventListener('click', showTcInput);
 
-// При потере фокуса — сохраняем и скрываем инпут
 tcInput.addEventListener('blur', hideTcInput);
 
-// По Enter тоже сохраняем
 tcInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         tcInput.blur();
     }
 });
 
-
-
-
-
-
-
-
-
+// Можно один раз вызвать правила при загрузке
+updateTCByRules();

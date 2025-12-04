@@ -86,6 +86,7 @@ main{
     text-align: center;
     font-size: 95%;
     font-weight: 500;
+    cursor: pointer; /* можно кликать для редактирования */
 }
 .timeOldText{
     color: rgb(33, 7, 80);
@@ -158,7 +159,6 @@ main{
 .btnSaveTiket{
     margin-top: 27px;
     margin-bottom: 15px;
-    /* font-family: 'Roboto', sans-serif; */
     cursor: pointer;
     padding-left: 2%;
     padding-right: 2%;
@@ -180,56 +180,50 @@ main{
     color: black;
     font-size: 77%;
     font-weight: 600;
-    position: relative; /* Определяет контекст позиционирования для фиксированного элемента */
+    position: relative;
 }
-
-/* Контейнер для кнопки */
 .btnSaveTiketClassStart {
     border-top-left-radius: 7px;
     border-top-right-radius: 7px;
-    display: flex;              
-    flex-direction: column;     
-    justify-content: center;    
-    text-align: center;         
-    background: rgb(248, 250, 239);         
-    height: 19.5%;             
-    position: fixed;           
-    bottom: 0;                 
-    left: 0;                  
-    width: 100%;               
-    z-index: 1000;             
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background: rgb(248, 250, 239);
+    height: 19.5%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
 }
-
-/* Стиль текста в контейнере */
 .btnSaveTiketClassStartText{
     margin-bottom: 3px;
     padding: 0;
 }
 .btnSaveTiketClassStartTextTwo {
     margin-bottom: 20px;
-    padding: 0; /* Убираем внутренние отступы у текста */
+    padding: 0;
 }
-
-/* Стиль кнопки */
-.btnSaveTiketStart {  
-    cursor: pointer;            
-    padding-left: 3%;          
-    padding-right: 3%;         
-    display: flex;             
-    justify-content: center;    
-    align-items: center;       
-    width: 94%;                 
-    height: 32%;              
+.btnSaveTiketStart {
+    cursor: pointer;
+    padding-left: 3%;
+    padding-right: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 94%;
+    height: 32%;
     background-color: rgb(57, 180, 33);
-    font-size: 16px;           
-    font-weight: 450;          
-    letter-spacing: 0.7px;     
-    border-radius: 8px;       
-    color: aliceblue;          
-    border: none;  
+    font-size: 16px;
+    font-weight: 450;
+    letter-spacing: 0.7px;
+    border-radius: 8px;
+    color: aliceblue;
+    border: none;
     z-index: 2000;
-    margin-left: 3%;           /* Отступ слева */
-    margin-right: 3%;                
+    margin-left: 3%;
+    margin-right: 3%;
 }
 .colorFonts{
     display: flex;
@@ -282,6 +276,8 @@ main{
     margin-left: 28%;
     height: 24px;
 }
+
+/* инпут для редактирования Т/С */
 #tcInput{
     display: none;
     width: 80px;

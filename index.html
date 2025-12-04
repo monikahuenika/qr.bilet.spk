@@ -1,79 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>qr.bilet.nspk.ru/result?</title>
-
-    <!-- Основное -->
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
-
-    <!-- Только для iPhone (iOS) -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="QR Bilet">
-    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon-180.png">
-
-
-    <!-- Favicon для вкладки Safari -->
-    <link rel="icon" type="image/png" sizes="32x32" href="./icons/apple-touch-icon-180.png">
 </head>
-<script>
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('./sw.js')
-                .then(() => console.log('✅ Service Worker зарегистрирован'))
-                .catch(err => console.error('❌ Ошибка регистрации SW:', err));
-        });
-    }
-</script>
 <body>
-    <div class="colorFonts" id="colorFonts"></div>
-    <main class="head">
-        <div class="boxStartQr" id="boxStartQr">
-            <div class="btnSaveTiketClassStart">
-                <div class="btnSaveTiketClassStartText">Ваша поездака оплачена, пожалуйста, сохраните билет</div>
-                <div class="btnSaveTiketClassStartTextTwo">в памяти телефона до конца поездки</div>
-                <button class="btnSaveTiketStart" id="btnSaveTiketStart">Сохранить билет</button>
-            </div>
+<div class="colorFonts" id="colorFonts"></div>
+<main class="head">
+    <div class="boxStartQr" id="boxStartQr">
+        <div class="btnSaveTiketClassStart">
+            <div class="btnSaveTiketClassStartText">Ваша поездака оплачена, пожалуйста, сохраните билет</div>
+            <div class="btnSaveTiketClassStartTextTwo">в памяти телефона до конца поездки</div>
+            <button class="btnSaveTiketStart" id="btnSaveTiketStart">Сохранить билет</button>
         </div>
-        <div class="box-head">Уведомление об оплате</div>
-        <div class="imgSbp">
-            <img src="img/image.png" alt="СБП">
+    </div>
+    <div class="box-head">Уведомление об оплате</div>
+    <div class="imgSbp">
+        <img src="img/image.png" alt="СБП">
+    </div>
+    <div class="winBay">Ваш проезд успешно оплачен!</div>
+    <div class="busNumber">
+        <span id="car">Автобус:</span>&nbsp;
+        <div id="textRedactor" onclick="showInput()">№
+            <span id="numberCar">71</span>
+            <input
+                    type="text"
+                    id="impunFl"
+                    oninput="updateDisplay()"
+                    onblur="hideInput()"
+            >
         </div>
-        <div class="winBay">Ваш проезд успешно оплачен!</div>
-        <div class="busNumber">
-            <span id="car">Автобус:</span>&nbsp;
-            <div id="textRedactor" onclick="showInput()">№
-                <span id="numberCar">71</span>
-                <input type="text" id="impunFl" oninput="updateDisplay()" onblur="hideInput()">
-            </div>
-        </div>
-        <div class="menuCar" id="menuCar">
-            <button class="btnMenu" id="btnMenuOne">Трамвай</button>
-            <button class="btnMenu" id="btnMenuTwo">Тролейбус</button>
-            <button class="btnMenu" id="btnMenuThree">Автобус</button>
-        </div>
-        <div class="numberRub">33&nbsp;<div class="twoNine">₽</div></div>
-        <div class="dataAndNowTime"><span id="DataTime">Дата</span></div>
-        <div class="tc" id="tc">
-            Т/C:&nbsp;
-            <span id="tcValue">1240</span>
-            <input type="text" id="tcInput">
-        </div>
-        <div class="timeOldText">С момента оплаты прошло:</div>
-        <div class="timeOldNumber"><span id="timeOldNumber">Время</span></div>
-        <div class="QR-code">
-            <img src="img/qr-code.gif" alt="QR-code">
-        </div>
-        <div class="seriesTikets">Cерия билета:&nbsp;<span class="numberSeriesTikets">QR361012088790</span></div>
-        <div class="numberTiket">Номер билета:&nbsp;<span class="numberTiketNam">202503356708013913</span></div>
-        <div class="textFooter"> Предявите контролеру QR-код.<div class="textFooterTwo">Чтобы сохранить реквизиты билета,</div>
-        <div class="textFooterThree"> нажмите кнопку «Скачть» </div> </div>
-        <div class="btnSaveTiketClass"><button class="btnSaveTiket">Скачать билет</button></div>
-    </main>
-    <script src="script.js"></script>
+    </div>
+    <div class="menuCar" id="menuCar">
+        <button class="btnMenu" id="btnMenuOne">Трамвай</button>
+        <button class="btnMenu" id="btnMenuTwo">Тролейбус</button>
+        <button class="btnMenu" id="btnMenuThree">Автобус</button>
+    </div>
+    <div class="numberRub">33&nbsp;<div class="twoNine">₽</div></div>
+    <div class="dataAndNowTime"><span id="DataTime">Дата</span></div>
+
+    <!-- Редактируемый Т/С -->
+    <div class="tc" id="tc">
+        Т/C:&nbsp;
+        <span id="tcValue">1240</span>
+        <input type="text" id="tcInput">
+    </div>
+
+    <div class="timeOldText">С момента оплаты прошло:</div>
+    <div class="timeOldNumber"><span id="timeOldNumber">Время</span></div>
+    <div class="QR-code">
+        <img src="img/qr-code.gif" alt="QR-code">
+    </div>
+    <div class="seriesTikets">Cерия билета:&nbsp;<span class="numberSeriesTikets">QR361012088790</span></div>
+    <div class="numberTiket">Номер билета:&nbsp;<span class="numberTiketNam">202503356708013913</span></div>
+    <div class="textFooter">
+        Предявите контролеру QR-код.
+        <div class="textFooterTwo">Чтобы сохранить реквизиты билета,</div>
+        <div class="textFooterThree">нажмите кнопку «Скачть»</div>
+    </div>
+    <div class="btnSaveTiketClass">
+        <button class="btnSaveTiket">Скачать билет</button>
+    </div>
+</main>
+<script src="script.js"></script>
 </body>
 </html>
