@@ -12,7 +12,36 @@ btnSaveTiketStart.addEventListener('click', () => {
 const numberCar = document.getElementById('numberCar');
 const impunFl = document.getElementById('impunFl');
 
-// Сделаем функции доступными для inline-обработчиков в HTML
+// Выбор вида транспорта
+const car = document.getElementById('car');
+const menuCar = document.getElementById('menuCar');
+const btnMenuOne = document.getElementById('btnMenuOne');   // Трамвай
+const btnMenuTwo = document.getElementById('btnMenuTwo');   // Тролейбус
+const btnMenuThree = document.getElementById('btnMenuThree'); // Автобус
+
+// Т/С
+const tcValue = document.getElementById('tcValue');
+
+//
+// === ПРАВИЛА ДЛЯ Т/С ===
+// Трамвай + 18 → 852
+// Трамвай + 2  → 033
+//
+function updateTCByRules() {
+    const transport = car.innerText.replace(':', '').trim(); // "Автобус", "Трамвай", "Тролейбус"
+    const route = numberCar.textContent.trim();
+
+    if (transport === 'Трамвай' && route === '18') {
+        tcValue.textContent = '852';
+    } else if (transport === 'Трамвай' && route === '2') {
+        tcValue.textContent = '033';
+    } else {
+        // всё остальное оставляем как есть
+        // tcValue.textContent = '1240';
+    }
+}
+
+// Делаем функции доступными для inline-обработчиков в HTML
 window.showInput = () => {
     impunFl.style.display = 'block';
     impunFl.value = numberCar.textContent.trim();
@@ -30,17 +59,12 @@ window.updateDisplay = () => {
     updateTCByRules();
 };
 
-// Выбор вида транспорта
-const car = document.getElementById('car');
-const menuCar = document.getElementById('menuCar');
-const btnMenuOne = document.getElementById('btnMenuOne');   // Трамвай
-const btnMenuTwo = document.getElementById('btnMenuTwo');   // Тролейбус
-const btnMenuThree = document.getElementById('btnMenuThree'); // Автобус
-
+// Открытие меню выбора транспорта
 car.addEventListener('click', () => {
     menuCar.style.display = 'flex';
 });
 
+// Кнопки транспорта
 btnMenuOne.addEventListener('click', () => {
     car.innerText = 'Трамвай';
     menuCar.style.display = 'none';
@@ -62,7 +86,7 @@ btnMenuThree.addEventListener('click', () => {
 // Дата и время
 const DataTime = document.getElementById('DataTime');
 
-const nowFu = () => {
+function nowFu() {
     const now = new Date();
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -71,20 +95,18 @@ const nowFu = () => {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const dateTimeString = `${day}.${month}.${year} ${hours}:${minutes}`;
     DataTime.innerText = dateTimeString;
-};
+}
 
-DataTime.addEventListener('click', () => {
-    nowFu();
-});
+DataTime.addEventListener('click', nowFu);
 
 // Таймер "С момента оплаты прошло"
 let timerInterval;
 let seconds = 0;
 const timeOldNumber = document.getElementById('timeOldNumber');
 
-const timeFu = () => {
+function timeFu() {
     clearInterval(timerInterval);
-    seconds = 30; // начинаем с 30 секунд
+    seconds = 30;
 
     timerInterval = setInterval(() => {
         const minutes = Math.floor(seconds / 60);
@@ -93,69 +115,9 @@ const timeFu = () => {
         seconds++;
         timeOldNumber.innerText = timeString;
     }, 1000);
-};
+}
 
-timeOldNumber.addEventListener('click', () => {
-    timeFu();
-});
+timeOldNumber.addEventListener('click', timeFu);
 
-// --- ЛОГИКА Т/С ---
-
-const tc = document.getElementById('tc');
-const tcValue = document.getElementById('tcValue');
-const tcInput = document.getElementById('tcInput');
-
-let isManualTc = false; // если пользователь сам ввёл Т/С, правила больше не трогаем
-
-// Автоподстановка Т/С по правилам
-const updateTCByRules = () => {
-    if (isManualTc) return; // не трогаем, если пользователь уже вручную редактировал
-
-    const transport = car.innerText.replace(':', '').trim();   // "Автобус", "Трамвай", "Тролейбус"
-    const route = numberCar.textContent.trim();                // номер маршрута
-
-    if (transport === 'Трамвай' && route === '18') {
-        tcValue.textContent = '852';
-    } else if (transport === 'Трамвай' && route === '2') {
-        tcValue.textContent = '033';
-    } else {
-        // можно оставить как есть, без сброса
-        // tcValue.textContent = '1240';
-    }
-};
-
-// Редактирование Т/С вручную по клику
-const showTcInput = () => {
-    isManualTc = true;
-    tcInput.style.display = 'inline-block';
-    tcInput.value = tcValue.textContent.trim();
-    tcValue.style.display = 'none';
-    tcInput.focus();
-};
-
-const hideTcInput = () => {
-    const val = tcInput.value.trim();
-    if (val) {
-        tcValue.textContent = val;
-        isManualTc = true;
-    } else {
-        // если пользователь стер всё — вернём управление правилам
-        isManualTc = false;
-        updateTCByRules();
-    }
-    tcInput.style.display = 'none';
-    tcValue.style.display = 'inline';
-};
-
-tc.addEventListener('click', showTcInput);
-
-tcInput.addEventListener('blur', hideTcInput);
-
-tcInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        tcInput.blur();
-    }
-});
-
-// Можно один раз вызвать правила при загрузке
+// Один раз обновим правила при загрузке
 updateTCByRules();
