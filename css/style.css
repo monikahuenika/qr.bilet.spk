@@ -1,10 +1,62 @@
+/* === CSS VARIABLES === */
+:root {
+    /* Colors - Primary */
+    --color-primary-dark: #1d1346;
+    --color-primary-light: #F5F1E8;
+
+    /* Colors - Text */
+    --color-text-dark: rgb(33, 7, 80);
+    --color-text-medium: rgb(31, 7, 75);
+    --color-text-accent: rgb(25, 7, 73);
+    --color-text-accent-dark: rgb(23, 6, 68);
+    --color-text-accent-darker: rgb(21, 5, 65);
+    --color-text-light: rgba(170, 170, 170, 0.863);
+
+    /* Colors - Buttons */
+    --color-button-primary: rgb(59, 158, 39);
+    --color-button-success: rgb(57, 180, 33);
+
+    /* Colors - Backgrounds */
+    --color-bg-box: rgb(248, 250, 239);
+    --color-overlay: rgba(48, 31, 61, 0.603);
+
+    /* Typography */
+    --font-primary: 'Calibri', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-display: 'Circle', 'Roboto', sans-serif;
+
+    /* Font Sizes */
+    --font-size-xs: 95%;
+    --font-size-sm: 16px;
+    --font-size-md: 19px;
+    --font-size-lg: 105%;
+    --font-size-xl: 120%;
+    --font-size-xxl: 175%;
+    --font-size-huge: 250%;
+
+    /* Spacing */
+    --spacing-xs: 5px;
+    --spacing-sm: 15px;
+    --spacing-md: 27px;
+    --spacing-lg: 3.5%;
+
+    /* Border Radius */
+    --border-radius: 8px;
+    --border-radius-sm: 7px;
+
+    /* Z-index Layers */
+    --z-overlay: 22;
+    --z-modal: 1000;
+    --z-button: 2000;
+}
+
+/* === BASE STYLES === */
 body{
     position: relative;
-    background: #F5F1E8;
+    background: var(--color-primary-light);
     display: flex;
     justify-content: center;
     margin: 0%;
-    font-family: 'calibri', sans-serif;
+    font-family: var(--font-primary);
     letter-spacing: 0.3px;
 }
 main{
@@ -20,9 +72,9 @@ main{
     padding-bottom: 1%;
     justify-content: center;
     align-items: center;
-    color: #F5F1E8;
-    background: #1d1346;
-    font-size: 105%;
+    color: var(--color-primary-light);
+    background: var(--color-primary-dark);
+    font-size: var(--font-size-lg);
     letter-spacing: 0.2px;
     font-weight: 550;
     height: 56px;
@@ -37,9 +89,9 @@ main{
     width: 32.8%;
 }
 .winBay{
-    color: rgb(31, 7, 75);
+    color: var(--color-text-medium);
     text-align: center;
-    font-size: 105%;
+    font-size: var(--font-size-lg);
     margin-bottom: 9.05%;
     font-weight: 500;
 }
@@ -50,59 +102,59 @@ main{
 #car{
     cursor: pointer;
     display: flex;
-    font-size: 120%;
-    color: rgb(31, 7, 75);
+    font-size: var(--font-size-xl);
+    color: var(--color-text-medium);
     font-weight: 570;
     letter-spacing: 0.5px;
 }
 .numberRub{
     margin-top: 0.7%;
     margin-bottom: 1.45%;
-    font-family: 'Circle', sans-serif;
+    font-family: var(--font-display);
     width: 100%;
     display: flex;
     justify-content: center;
-    font-size: 250%;
+    font-size: var(--font-size-huge);
     font-weight: 600;
-    color: rgb(23, 6, 68);
+    color: var(--color-text-accent-dark);
 }
 .twoNine{
-    font-family: 'Circle', sans-serif;
+    font-family: var(--font-display);
     font-weight: 200;
     font-size: 100%;
 }
 .dataAndNowTime{
     margin-top: 3.1%;
     letter-spacing: 0.2px;
-    font-family: 'Circle', sans-serif;
-    font-size: 105%;
+    font-family: var(--font-display);
+    font-size: var(--font-size-lg);
     font-weight: 450;
     text-align: center;
-    color: rgb(31, 7, 75);
+    color: var(--color-text-medium);
 }
 .tc{
     margin-top: 0.8%;
-    color: rgba(170, 170, 170, 0.863);
+    color: var(--color-text-light);
     text-align: center;
-    font-size: 95%;
+    font-size: var(--font-size-xs);
     font-weight: 500;
     cursor: pointer; /* можно кликать для редактирования */
 }
 .timeOldText{
-    color: rgb(33, 7, 80);
+    color: var(--color-text-dark);
     margin-top: 9%;
-    font-size: 105%;
+    font-size: var(--font-size-lg);
     font-weight: 500;
     text-align: center ;
     letter-spacing: 0.2px;
 }
 .timeOldNumber{
     cursor: pointer;
-    font-family: 'Circle', sans-serif;
+    font-family: var(--font-display);
     text-align: center;
-    color: rgb(25, 7, 73);
+    color: var(--color-text-accent);
     font-weight: 600;
-    font-size: 175%;
+    font-size: var(--font-size-xxl);
 }
 .QR-code{
     margin-top: 3.5%;
@@ -111,7 +163,7 @@ main{
     z-index: 1;
     width: 100%;
     height: 23em;
-    background: #F5F1E8;
+    background: var(--color-primary-light);
 }
 .QR-code img{
     width: 94%;
@@ -121,35 +173,35 @@ main{
 }
 .seriesTikets{
     text-align: center;
-    color: rgb(33, 7, 80);
-    font-size: 19px;
+    color: var(--color-text-dark);
+    font-size: var(--font-size-md);
     font-weight: 500;
     letter-spacing: 0.2px;
 }
 .numberSeriesTikets{
-    font-family: 'Circle', sans-serif;
+    font-family: var(--font-display);
     font-size: 18px;
     font-weight: 600;
 }
 .numberTiket{
     text-align: center;
-    color: rgb(33, 7, 80);
-    font-size: 19px;
+    color: var(--color-text-dark);
+    font-size: var(--font-size-md);
     font-weight: 500;
     letter-spacing: 0.2px;
 }
 .numberTiketNam{
-    font-family: 'Circle', sans-serif;
+    font-family: var(--font-display);
     font-size: 18px;
     font-weight: 600;
 }
 .textFooter{
     text-align: center;
-    color: rgb(33, 7, 80);
-    font-size: 19px;
+    color: var(--color-text-dark);
+    font-size: var(--font-size-md);
     font-weight: 500;
     letter-spacing: 0.2px;
-    margin-top: 27px;
+    margin-top: var(--spacing-md);
 }
 .btnSaveTiketClass{
     display: flex;
@@ -157,8 +209,8 @@ main{
     width: 100%;
 }
 .btnSaveTiket{
-    margin-top: 27px;
-    margin-bottom: 15px;
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     cursor: pointer;
     padding-left: 2%;
     padding-right: 2%;
@@ -167,11 +219,11 @@ main{
     align-items: center;
     width: 96%;
     height: 45px;
-    background: rgb(59, 158, 39);
-    font-size: 16px;
+    background: var(--color-button-primary);
+    font-size: var(--font-size-sm);
     font-weight: 400;
     letter-spacing: 0.4px;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     color: aliceblue;
     border: none;
 }
@@ -183,19 +235,19 @@ main{
     position: relative;
 }
 .btnSaveTiketClassStart {
-    border-top-left-radius: 7px;
-    border-top-right-radius: 7px;
+    border-top-left-radius: var(--border-radius-sm);
+    border-top-right-radius: var(--border-radius-sm);
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    background: rgb(248, 250, 239);
+    background: var(--color-bg-box);
     height: 19.5%;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: var(--z-modal);
 }
 .btnSaveTiketClassStartText{
     margin-bottom: 3px;
@@ -214,14 +266,14 @@ main{
     align-items: center;
     width: 94%;
     height: 32%;
-    background-color: rgb(57, 180, 33);
-    font-size: 16px;
+    background-color: var(--color-button-success);
+    font-size: var(--font-size-sm);
     font-weight: 450;
     letter-spacing: 0.7px;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     color: aliceblue;
     border: none;
-    z-index: 2000;
+    z-index: var(--z-button);
     margin-left: 3%;
     margin-right: 3%;
 }
@@ -230,10 +282,10 @@ main{
     top: 0;
     left: 0;
     position: fixed;
-    z-index: 22;
+    z-index: var(--z-overlay);
     width: 100%;
     height: 100%;
-    background: rgba(48, 31, 61, 0.603);
+    background: var(--color-overlay);
     pointer-events: none;
 }
 #textRedactor{
@@ -243,10 +295,10 @@ main{
     cursor: text;
     border: none;
     font-size: 119%;
-    font-family: 'Circle', sans-serif;
+    font-family: var(--font-display);
     font-weight: 600;
     letter-spacing: 0.0px;
-    color: rgb(21, 5, 65);
+    color: var(--color-text-accent-darker);
 }
 #impunFl{
     width: 100px;
@@ -265,12 +317,12 @@ main{
     cursor: pointer;
     display: flex;
     border: none;
-    border-radius: 8px;
+    border-radius: var(--border-radius);
     font-size: 21px;
-    color: rgb(31, 7, 75);
+    color: var(--color-text-medium);
     font-weight: 550;
     letter-spacing: 0.3px;
-    margin-top: 5px;
+    margin-top: var(--spacing-xs);
     align-items: center;
     width: 35%;
     margin-left: 28%;
@@ -283,10 +335,10 @@ main{
     width: 80px;
     border: none;
     outline: none;
-    font-size: 95%;
-    font-family: 'Circle', sans-serif;
+    font-size: var(--font-size-xs);
+    font-family: var(--font-display);
     font-weight: 600;
     background: transparent;
     text-align: left;
-    color: rgb(33, 7, 80);
+    color: var(--color-text-dark);
 }

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>qr.bilet.nspk.ru/result?</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -12,7 +12,7 @@
 <main class="head">
     <div class="boxStartQr" id="boxStartQr">
         <div class="btnSaveTiketClassStart">
-            <div class="btnSaveTiketClassStartText">Ваша поездака оплачена, пожалуйста, сохраните билет</div>
+            <div class="btnSaveTiketClassStartText">Ваша поездка оплачена, пожалуйста, сохраните билет</div>
             <div class="btnSaveTiketClassStartTextTwo">в памяти телефона до конца поездки</div>
             <button class="btnSaveTiketStart" id="btnSaveTiketStart">Сохранить билет</button>
         </div>
@@ -24,13 +24,11 @@
     <div class="winBay">Ваш проезд успешно оплачен!</div>
     <div class="busNumber">
         <span id="car">Автобус:</span>&nbsp;
-        <div id="textRedactor" onclick="showInput()">№
+        <div id="textRedactor">№
             <span id="numberCar">71</span>
             <input
                     type="text"
                     id="impunFl"
-                    oninput="updateDisplay()"
-                    onblur="hideInput()"
             >
         </div>
     </div>
@@ -59,12 +57,12 @@
     <div class="textFooter">
         Предявите контролеру QR-код.
         <div class="textFooterTwo">Чтобы сохранить реквизиты билета,</div>
-        <div class="textFooterThree">нажмите кнопку «Скачть»</div>
+        <div class="textFooterThree">нажмите кнопку «Скачать»</div>
     </div>
     <div class="btnSaveTiketClass">
         <button class="btnSaveTiket">Скачать билет</button>
     </div>
 </main>
-<script src="script.js"></script>
+<script type="module" src="js/app.js"></script>
 </body>
 </html>
