@@ -1,4 +1,5 @@
 import { StateManager } from './state-manager.js';
+import { TCEditor } from './tc-editor.js';
 
 /**
  * Правила автоматического определения T/C (Terminal/Card) номера
@@ -52,9 +53,8 @@ export const TCRulesManager = {
 
         const tcValue = this.RULES[transport]?.[route];
         if (tcValue) {
-            this.terminalCardNumber.textContent = tcValue;
-            // Сохранить новый T/C номер
-            StateManager.saveTCNumber(tcValue);
+            // Используем TCEditor для установки значения
+            TCEditor.setTC(tcValue);
             console.log(`🔄 T/C обновлен: ${transport} ${route} → ${tcValue}`);
         }
     }

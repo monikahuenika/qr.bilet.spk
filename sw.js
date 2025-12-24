@@ -10,6 +10,7 @@ const ASSETS = [
     "./js/modules/route-editor.js",
     "./js/modules/transport-selector.js",
     "./js/modules/tc-rules.js",
+    "./js/modules/tc-editor.js",
     "./js/modules/datetime.js",
     "./js/modules/state-manager.js"
 ];

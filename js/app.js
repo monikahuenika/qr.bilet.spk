@@ -4,6 +4,7 @@
  */
 import { OverlayManager } from './modules/overlay.js';
 import { TCRulesManager } from './modules/tc-rules.js';
+import { TCEditor } from './modules/tc-editor.js';
 import { RouteEditor } from './modules/route-editor.js';
 import { TransportSelector } from './modules/transport-selector.js';
 import { DateTimeManager } from './modules/datetime.js';
@@ -14,6 +15,7 @@ import { DateTimeManager } from './modules/datetime.js';
 function initApp() {
     // Инициализация всех модулей в правильном порядке
     TCRulesManager.init();
+    TCEditor.init();
     RouteEditor.init();
     TransportSelector.init();
     DateTimeManager.init();

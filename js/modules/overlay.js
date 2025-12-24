@@ -13,7 +13,8 @@ export const OverlayManager = {
     init() {
         this.colorFonts = document.getElementById('colorFonts');
         this.boxStartQr = document.getElementById('boxStartQr');
-        this.btnSaveTicketStart = document.getElementById('btnSaveTicketStart');
+        // Исправлен ID - в HTML используется btnSaveTiketStart
+        this.btnSaveTicketStart = document.getElementById('btnSaveTiketStart');
 
         if (this.btnSaveTicketStart) {
             this.btnSaveTicketStart.addEventListener('click', () => this.hide());
