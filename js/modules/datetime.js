@@ -10,6 +10,7 @@ export const DateTimeManager = {
     timerInterval: null,
     seconds: 0,
     sessionStartDateTime: null,
+    btnDownloadTicket: null,
 
     /**
      * Инициализация модуля
@@ -17,6 +18,7 @@ export const DateTimeManager = {
     init() {
         this.dateTimeDisplay = document.getElementById('DataTime');
         this.timeOldNumber = document.getElementById('timeOldNumber');
+        this.btnDownloadTicket = document.getElementById('btnDownloadTicket');
 
         // Получить или создать сессию
         const session = StateManager.getOrCreateSession();
@@ -38,6 +40,20 @@ export const DateTimeManager = {
         if (this.timeOldNumber) {
             this.timeOldNumber.addEventListener('click', () => this.restartSession());
         }
+
+        // Клик на "Скачать билет" также перезапускает сессию
+        if (this.btnDownloadTicket) {
+            this.btnDownloadTicket.addEventListener('click', () => this.handleDownloadTicket());
+        }
+    },
+
+    /**
+     * Обработчик кнопки "Скачать билет"
+     * Перезапускает сессию (сбрасывает таймер и дату)
+     */
+    handleDownloadTicket() {
+        console.log('📥 Скачивание билета - сброс таймера');
+        this.restartSession();
     },
 
     /**
@@ -117,7 +133,7 @@ export const DateTimeManager = {
     },
 
     /**
-     * Перезапустить сессию (при клике на таймер)
+     * Перезапустить сессию (при клике на таймер или кнопку "Скачать билет")
      */
     restartSession() {
         // Создать новую сессию

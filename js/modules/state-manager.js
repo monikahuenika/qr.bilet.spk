@@ -85,15 +85,28 @@ export const StateManager = {
         }
     },
 
-    // === УПРАВЛЕНИЕ СЕССИЕЙ (sessionStorage) ===
+    // === УПРАВЛЕНИЕ СЕССИЕЙ (гибридный подход: LocalStorage + SessionStorage) ===
 
     /**
-     * Получить данные сессии
+     * Получить ID текущей вкладки (хранится только в SessionStorage)
+     * @returns {string} ID вкладки
+     */
+    getTabId() {
+        let tabId = sessionStorage.getItem('tab-id');
+        if (!tabId) {
+            tabId = 'tab-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            sessionStorage.setItem('tab-id', tabId);
+        }
+        return tabId;
+    },
+
+    /**
+     * Получить данные сессии из LocalStorage
      * @returns {Object|null} Данные сессии или null
      */
     getSession() {
         try {
-            const stored = sessionStorage.getItem(this.SESSION_KEY);
+            const stored = localStorage.getItem(this.SESSION_KEY);
             if (stored) {
                 return JSON.parse(stored);
             }
@@ -108,14 +121,16 @@ export const StateManager = {
      * @returns {Object} Данные новой сессии
      */
     startSession() {
+        const tabId = this.getTabId();
         const session = {
             startTime: new Date().toISOString(),
             startTimestamp: Date.now(),
-            initialDateTime: new Date().toISOString()
+            initialDateTime: new Date().toISOString(),
+            tabId: tabId
         };
 
         try {
-            sessionStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
+            localStorage.setItem(this.SESSION_KEY, JSON.stringify(session));
             console.log('🆕 Новая сессия создана:', session);
         } catch (e) {
             console.error('Ошибка создания сессии:', e);
@@ -126,14 +141,16 @@ export const StateManager = {
 
     /**
      * Получить время начала сессии
-     * Если сессия не существует - создать новую
+     * Если сессия не существует или принадлежит другой вкладке - создать новую
      * @returns {Object} { startTime, elapsedSeconds, initialDateTime }
      */
     getOrCreateSession() {
+        const currentTabId = this.getTabId();
         let session = this.getSession();
 
-        if (!session) {
-            // Новая сессия - вкладка была закрыта или первый запуск
+        // Если сессия не существует или принадлежит другой вкладке (та вкладка была закрыта)
+        if (!session || session.tabId !== currentTabId) {
+            console.log('🔄 Создание новой сессии (вкладка была закрыта или первый запуск)');
             session = this.startSession();
             return {
                 startTime: session.startTime,
@@ -157,11 +174,11 @@ export const StateManager = {
     },
 
     /**
-     * Очистить сессию (при закрытии вкладки происходит автоматически)
+     * Очистить сессию
      */
     clearSession() {
         try {
-            sessionStorage.removeItem(this.SESSION_KEY);
+            localStorage.removeItem(this.SESSION_KEY);
             console.log('🗑️ Сессия очищена');
         } catch (e) {
             console.error('Ошибка очистки сессии:', e);
