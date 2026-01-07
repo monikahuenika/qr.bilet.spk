@@ -138,7 +138,12 @@ main{
     text-align: center;
     font-size: var(--font-size-xs);
     font-weight: 500;
-    cursor: pointer; /* можно кликать для редактирования */
+}
+#tcLabel{
+    cursor: pointer;
+}
+#tcValue{
+    cursor: pointer;
 }
 .timeOldText{
     color: var(--color-text-dark);

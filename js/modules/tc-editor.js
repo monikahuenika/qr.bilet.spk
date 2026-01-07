@@ -3,6 +3,7 @@ import { TCSelector } from './tc-selector.js';
 
 export const TCEditor = {
     tcContainer: null,
+    tcLabel: null,
     tcValue: null,
     tcInput: null,
     tcSelect: null,
@@ -10,12 +11,17 @@ export const TCEditor = {
 
     init() {
         this.tcContainer = document.getElementById('tc');
+        this.tcLabel = document.getElementById('tcLabel');
         this.tcValue = document.getElementById('tcValue');
         this.tcInput = document.getElementById('tcInput');
         this.tcSelect = document.getElementById('tcSelect');
 
-        if (this.tcContainer) {
-            this.tcContainer.addEventListener('click', () => this.show());
+        if (this.tcLabel) {
+            this.tcLabel.addEventListener('click', () => this.show());
+        }
+
+        if (this.tcValue) {
+            this.tcValue.addEventListener('click', () => this.showInput());
         }
 
         if (this.tcInput) {
