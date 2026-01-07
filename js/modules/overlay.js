@@ -1,19 +1,11 @@
-/**
- * Управление оверлеем "Сохранить билет"
- * Показывает начальный экран с предложением сохранить билет
- */
 export const OverlayManager = {
     colorFonts: null,
     boxStartQr: null,
     btnSaveTicketStart: null,
 
-    /**
-     * Инициализация модуля
-     */
     init() {
         this.colorFonts = document.getElementById('colorFonts');
         this.boxStartQr = document.getElementById('boxStartQr');
-        // Исправлен ID - в HTML используется btnSaveTiketStart
         this.btnSaveTicketStart = document.getElementById('btnSaveTiketStart');
 
         if (this.btnSaveTicketStart) {
@@ -21,9 +13,6 @@ export const OverlayManager = {
         }
     },
 
-    /**
-     * Скрыть оверлей
-     */
     hide() {
         if (this.colorFonts) {
             this.colorFonts.style.display = 'none';
