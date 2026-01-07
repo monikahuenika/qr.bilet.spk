@@ -36,12 +36,7 @@ export const DateTimeManager = {
             this.dateTimeDisplay.addEventListener('click', () => this.updateDateTime());
         }
 
-        // Клик на таймер перезапускает сессию
-        if (this.timeOldNumber) {
-            this.timeOldNumber.addEventListener('click', () => this.restartSession());
-        }
-
-        // Клик на "Скачать билет" также перезапускает сессию
+        // Клик на "Скачать билет" перезапускает сессию
         if (this.btnDownloadTicket) {
             this.btnDownloadTicket.addEventListener('click', () => this.handleDownloadTicket());
         }
@@ -133,7 +128,7 @@ export const DateTimeManager = {
     },
 
     /**
-     * Перезапустить сессию (при клике на таймер или кнопку "Скачать билет")
+     * Перезапустить сессию (при клике на кнопку "Скачать билет")
      */
     restartSession() {
         // Создать новую сессию
