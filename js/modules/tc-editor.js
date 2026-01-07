@@ -20,7 +20,9 @@ export const TCEditor = {
 
         if (this.tcInput) {
             this.tcInput.addEventListener('input', () => this.updateFromInput());
-            this.tcInput.addEventListener('blur', () => this.hide());
+            this.tcInput.addEventListener('blur', () => {
+                setTimeout(() => this.hide(), 100);
+            });
             this.tcInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
                     this.tcInput.blur();
@@ -30,7 +32,6 @@ export const TCEditor = {
 
         if (this.tcSelect) {
             this.tcSelect.addEventListener('change', () => this.updateFromSelect());
-            this.tcSelect.addEventListener('blur', () => this.hide());
         }
     },
 
@@ -73,25 +74,33 @@ export const TCEditor = {
         });
 
         this.currentMode = 'select';
-        this.tcSelect.style.display = 'inline-block';
-        this.tcSelect.focus();
         this.tcValue.style.display = 'none';
         this.tcInput.style.display = 'none';
+        this.tcSelect.style.display = 'inline-block';
+
+        setTimeout(() => {
+            this.tcSelect.focus();
+        }, 50);
     },
 
     showInput() {
         if (!this.tcInput || !this.tcValue) return;
 
         this.currentMode = 'input';
-        this.tcInput.style.display = 'inline-block';
         this.tcInput.value = this.tcValue.textContent.trim();
-        this.tcInput.focus();
         this.tcValue.style.display = 'none';
         this.tcSelect.style.display = 'none';
+        this.tcInput.style.display = 'inline-block';
+
+        setTimeout(() => {
+            this.tcInput.focus();
+        }, 50);
     },
 
     hide() {
         if (!this.tcValue) return;
+
+        if (this.currentMode === 'display') return;
 
         this.tcInput.style.display = 'none';
         this.tcSelect.style.display = 'none';
