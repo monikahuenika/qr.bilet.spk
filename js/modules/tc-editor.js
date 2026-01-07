@@ -105,11 +105,11 @@ export const TCEditor = {
         const selectedValue = this.tcSelect.value;
 
         if (selectedValue === '__custom__') {
-            this.tcSelect.style.display = 'none';
             this.showInput();
         } else {
             this.tcValue.textContent = selectedValue;
             StateManager.saveTCNumber(selectedValue);
+            this.hide();
         }
     },
 
