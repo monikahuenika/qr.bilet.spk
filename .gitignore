@@ -4,3 +4,13 @@ CLAUDE.md
 
 # Claude Code settings
 .claude/
+
+# IDE settings
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
