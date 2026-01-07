@@ -342,3 +342,18 @@ main{
     text-align: left;
     color: var(--color-text-dark);
 }
+
+/* селект для выбора Т/С из списка */
+#tcSelect{
+    display: none;
+    width: 80px;
+    border: none;
+    outline: none;
+    font-size: var(--font-size-xs);
+    font-family: var(--font-display);
+    font-weight: 600;
+    background: transparent;
+    text-align: left;
+    color: var(--color-text-dark);
+    cursor: pointer;
+}

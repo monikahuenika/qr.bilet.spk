@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v6";
+const CACHE_VERSION = "v7";
 const CACHE_NAME = `qr-bilet-${CACHE_VERSION}`;
 const ASSETS = [
     "./",
@@ -11,8 +11,10 @@ const ASSETS = [
     "./js/modules/transport-selector.js",
     "./js/modules/tc-rules.js",
     "./js/modules/tc-editor.js",
+    "./js/modules/tc-selector.js",
     "./js/modules/datetime.js",
-    "./js/modules/state-manager.js"
+    "./js/modules/state-manager.js",
+    "./js/data/tc-numbers.json"
 ];
 
 self.addEventListener("install", (e) => {

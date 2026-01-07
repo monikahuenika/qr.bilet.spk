@@ -1,11 +1,14 @@
 import { OverlayManager } from './modules/overlay.js';
 import { TCRulesManager } from './modules/tc-rules.js';
 import { TCEditor } from './modules/tc-editor.js';
+import { TCSelector } from './modules/tc-selector.js';
 import { RouteEditor } from './modules/route-editor.js';
 import { TransportSelector } from './modules/transport-selector.js';
 import { DateTimeManager } from './modules/datetime.js';
 
-function initApp() {
+async function initApp() {
+    await TCSelector.init();
+
     TCRulesManager.init();
     TCEditor.init();
     RouteEditor.init();
