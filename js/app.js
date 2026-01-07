@@ -24,10 +24,29 @@ function initApp() {
     console.log('✅ Приложение инициализировано');
 }
 
+/**
+ * Регистрация Service Worker для PWA
+ */
+function registerServiceWorker() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js')
+            .then(registration => {
+                console.log('✅ Service Worker зарегистрирован:', registration.scope);
+            })
+            .catch(error => {
+                console.error('❌ Ошибка регистрации Service Worker:', error);
+            });
+    }
+}
+
 // Запуск при загрузке DOM
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initApp);
+    document.addEventListener('DOMContentLoaded', () => {
+        initApp();
+        registerServiceWorker();
+    });
 } else {
     // DOM уже загружен
     initApp();
+    registerServiceWorker();
 }

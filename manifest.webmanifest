@@ -1,9 +1,31 @@
 {
   "name": "QR.Bilet.SPK",
   "short_name": "QR Bilet",
+  "description": "QR-билет для оплаты проезда в общественном транспорте через СБП",
   "start_url": "/qr.bilet.spk/",
   "scope": "/qr.bilet.spk/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff"
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "icons/apple-touch-icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }
