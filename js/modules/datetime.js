@@ -10,6 +10,7 @@ export const DateTimeManager = {
     purchaseTimestamp: null,
     offsetSeconds: 30,
     btnDownloadTicket: null,
+    isEditorOpen: false,
 
     init() {
         this.dateTimeDisplay = document.getElementById('DataTime');
@@ -25,10 +26,6 @@ export const DateTimeManager = {
 
         this.setInitialDateTime();
         this.startTimerFromSession();
-
-        if (this.dateTimeDisplay) {
-            this.dateTimeDisplay.addEventListener('click', (event) => this.updateDateTime(event));
-        }
 
         if (this.dateTimeContainer) {
             this.dateTimeContainer.addEventListener('click', (event) => this.updateDateTime(event));
@@ -84,13 +81,51 @@ export const DateTimeManager = {
         this.updateTimerDisplay();
     },
 
-    updateDateTime(event) {
-        if (!this.dateTimeDisplay || !this.timeOldNumber) return;
-        if (event) event.preventDefault();
+    parseDateTime(value) {
+        const match = value.trim().match(/^(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})$/);
+        if (!match) return null;
 
-        const baseDate = this.sessionStartDateTime || new Date();
+        const [, day, month, year, hours, minutes] = match;
+        const parsed = new Date(
+            Number(year),
+            Number(month) - 1,
+            Number(day),
+            Number(hours),
+            Number(minutes),
+            0,
+            0
+        );
+
+        if (
+            parsed.getFullYear() !== Number(year)
+            || parsed.getMonth() !== Number(month) - 1
+            || parsed.getDate() !== Number(day)
+            || parsed.getHours() !== Number(hours)
+            || parsed.getMinutes() !== Number(minutes)
+        ) {
+            return null;
+        }
+
+        return parsed;
+    },
+
+    openPromptFallback(baseDate) {
+        const currentText = this.formatDateTime(baseDate);
+        const userValue = window.prompt('Введите дату и время покупки в формате ДД.ММ.ГГГГ ЧЧ:ММ', currentText);
+
+        if (userValue === null) return;
+
+        const parsedDate = this.parseDateTime(userValue);
+        if (!parsedDate) {
+            window.alert('Неверный формат даты. Используйте: ДД.ММ.ГГГГ ЧЧ:ММ');
+            return;
+        }
+
+        this.applyNewPurchaseDate(parsedDate);
+    },
+
+    openNativePicker(baseDate) {
         const pickerInput = document.createElement('input');
-
         pickerInput.type = 'datetime-local';
         pickerInput.value = this.formatDateTimeForInput(baseDate);
         pickerInput.style.position = 'fixed';
@@ -102,42 +137,71 @@ export const DateTimeManager = {
 
         document.body.appendChild(pickerInput);
 
-        const cleanup = () => {
-            pickerInput.removeEventListener('change', onChange);
-            pickerInput.removeEventListener('blur', onBlur);
-            pickerInput.remove();
-        };
+        return new Promise((resolve) => {
+            const cleanup = () => {
+                pickerInput.removeEventListener('change', onChange);
+                pickerInput.removeEventListener('blur', onBlur);
+                pickerInput.remove();
+            };
 
-        const onChange = () => {
-            if (!pickerInput.value) {
+            const onChange = () => {
+                if (!pickerInput.value) {
+                    cleanup();
+                    resolve(false);
+                    return;
+                }
+
+                const parsedDate = new Date(pickerInput.value);
+                if (Number.isNaN(parsedDate.getTime())) {
+                    cleanup();
+                    resolve(false);
+                    return;
+                }
+
+                this.applyNewPurchaseDate(parsedDate);
                 cleanup();
-                return;
-            }
+                resolve(true);
+            };
 
-            const parsedDate = new Date(pickerInput.value);
-            if (Number.isNaN(parsedDate.getTime())) {
+            const onBlur = () => {
                 cleanup();
-                return;
+                resolve(false);
+            };
+
+            pickerInput.addEventListener('change', onChange);
+            pickerInput.addEventListener('blur', onBlur);
+
+            try {
+                if (typeof pickerInput.showPicker === 'function') {
+                    pickerInput.showPicker();
+                } else {
+                    pickerInput.focus();
+                    pickerInput.click();
+                }
+            } catch (e) {
+                cleanup();
+                resolve(false);
             }
+        });
+    },
 
-            this.applyNewPurchaseDate(parsedDate);
-            cleanup();
-        };
-
-        const onBlur = () => {
-            cleanup();
-        };
-
-        pickerInput.addEventListener('change', onChange);
-        pickerInput.addEventListener('blur', onBlur);
-
-        if (typeof pickerInput.showPicker === 'function') {
-            pickerInput.showPicker();
-            return;
+    async updateDateTime(event) {
+        if (!this.dateTimeDisplay || !this.timeOldNumber || this.isEditorOpen) return;
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
         }
 
-        pickerInput.focus();
-        pickerInput.click();
+        this.isEditorOpen = true;
+
+        const baseDate = this.sessionStartDateTime || new Date();
+        const updated = await this.openNativePicker(baseDate);
+
+        if (!updated) {
+            this.openPromptFallback(baseDate);
+        }
+
+        this.isEditorOpen = false;
     },
 
     syncSecondsWithPhoneTime() {
