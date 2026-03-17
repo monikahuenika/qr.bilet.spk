@@ -52,7 +52,10 @@ export const TransportSelector = {
     },
 
     isMenuOpen() {
-        return this.transportTypeMenu?.style.display === 'flex';
+        if (!this.transportTypeMenu) return false;
+
+        const computedStyle = window.getComputedStyle(this.transportTypeMenu);
+        return computedStyle.display === 'flex';
     },
 
     toggleMenu() {

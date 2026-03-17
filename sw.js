@@ -1,4 +1,4 @@
-const CACHE_VERSION = "v11";
+const CACHE_VERSION = "v12";
 const CACHE_NAME = `qr-bilet-${CACHE_VERSION}`;
 const ASSETS = [
     "./",

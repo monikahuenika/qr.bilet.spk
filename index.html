@@ -69,6 +69,20 @@
         <button class="btnSaveTiket" id="btnDownloadTicket">Скачать билет</button>
     </div>
 </main>
+
+<!-- Модальное окно редактирования Т/С -->
+<div class="tcEditorModal" id="tcEditorModal">
+    <div class="tcEditorOverlay" id="tcEditorOverlay"></div>
+    <div class="tcEditorContent">
+        <div class="tcEditorTitle">Введите номер Т/С</div>
+        <input type="text" class="tcEditorInput" id="tcEditorInput" inputmode="numeric" pattern="[0-9]*">
+        <div class="tcEditorButtons">
+            <button class="tcEditorBtn tcEditorBtnCancel" id="tcEditorBtnCancel">Отмена</button>
+            <button class="tcEditorBtn tcEditorBtnSave" id="tcEditorBtnSave">Сохранить</button>
+        </div>
+    </div>
+</div>
+
 <script type="module" src="js/app.js"></script>
 </body>
 </html>
