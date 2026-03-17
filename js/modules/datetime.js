@@ -185,6 +185,11 @@ export const DateTimeManager = {
         });
     },
 
+
+    isStandalonePWA() {
+        return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    },
+
     async updateDateTime(event) {
         if (!this.dateTimeDisplay || !this.timeOldNumber || this.isEditorOpen) return;
         if (event) {
@@ -195,6 +200,13 @@ export const DateTimeManager = {
         this.isEditorOpen = true;
 
         const baseDate = this.sessionStartDateTime || new Date();
+
+        if (this.isStandalonePWA()) {
+            this.openPromptFallback(baseDate);
+            this.isEditorOpen = false;
+            return;
+        }
+
         const updated = await this.openNativePicker(baseDate);
 
         if (!updated) {
