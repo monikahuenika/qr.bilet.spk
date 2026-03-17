@@ -2,6 +2,7 @@ import { StateManager } from './state-manager.js';
 
 export const DateTimeManager = {
     dateTimeDisplay: null,
+    dateTimeContainer: null,
     timeOldNumber: null,
     timerInterval: null,
     seconds: 0,
@@ -12,6 +13,7 @@ export const DateTimeManager = {
 
     init() {
         this.dateTimeDisplay = document.getElementById('DataTime');
+        this.dateTimeContainer = document.querySelector('.dataAndNowTime');
         this.timeOldNumber = document.getElementById('timeOldNumber');
         this.btnDownloadTicket = document.getElementById('btnDownloadTicket');
 
@@ -25,7 +27,11 @@ export const DateTimeManager = {
         this.startTimerFromSession();
 
         if (this.dateTimeDisplay) {
-            this.dateTimeDisplay.addEventListener('click', () => this.updateDateTime());
+            this.dateTimeDisplay.addEventListener('click', (event) => this.updateDateTime(event));
+        }
+
+        if (this.dateTimeContainer) {
+            this.dateTimeContainer.addEventListener('click', (event) => this.updateDateTime(event));
         }
 
         if (this.btnDownloadTicket) {
@@ -49,26 +55,18 @@ export const DateTimeManager = {
         return `${day}.${month}.${year} ${hours}:${minutes}`;
     },
 
+    formatDateTimeForInput(date) {
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    },
+
     setInitialDateTime() {
         if (!this.dateTimeDisplay || !this.sessionStartDateTime) return;
 
         this.dateTimeDisplay.innerText = this.formatDateTime(this.sessionStartDateTime);
     },
 
-    updateDateTime() {
-        if (!this.dateTimeDisplay || !this.timeOldNumber) return;
-
-        const currentText = this.formatDateTime(this.sessionStartDateTime || new Date());
-        const userValue = window.prompt('Введите дату и время покупки в формате ДД.ММ.ГГГГ ЧЧ:ММ', currentText);
-
-        if (userValue === null) return;
-
-        const parsedDate = this.parseDateTime(userValue);
-        if (!parsedDate) {
-            window.alert('Неверный формат даты. Используйте: ДД.ММ.ГГГГ ЧЧ:ММ');
-            return;
-        }
-
+    applyNewPurchaseDate(parsedDate) {
         this.sessionStartDateTime = parsedDate;
         this.purchaseTimestamp = parsedDate.getTime();
 
@@ -86,32 +84,60 @@ export const DateTimeManager = {
         this.updateTimerDisplay();
     },
 
-    parseDateTime(value) {
-        const match = value.trim().match(/^(\d{2})\.(\d{2})\.(\d{4})\s+(\d{2}):(\d{2})$/);
-        if (!match) return null;
+    updateDateTime(event) {
+        if (!this.dateTimeDisplay || !this.timeOldNumber) return;
+        if (event) event.preventDefault();
 
-        const [, day, month, year, hours, minutes] = match;
-        const parsed = new Date(
-            Number(year),
-            Number(month) - 1,
-            Number(day),
-            Number(hours),
-            Number(minutes),
-            0,
-            0
-        );
+        const baseDate = this.sessionStartDateTime || new Date();
+        const pickerInput = document.createElement('input');
 
-        if (
-            parsed.getFullYear() !== Number(year)
-            || parsed.getMonth() !== Number(month) - 1
-            || parsed.getDate() !== Number(day)
-            || parsed.getHours() !== Number(hours)
-            || parsed.getMinutes() !== Number(minutes)
-        ) {
-            return null;
+        pickerInput.type = 'datetime-local';
+        pickerInput.value = this.formatDateTimeForInput(baseDate);
+        pickerInput.style.position = 'fixed';
+        pickerInput.style.opacity = '0';
+        pickerInput.style.pointerEvents = 'none';
+        pickerInput.style.width = '1px';
+        pickerInput.style.height = '1px';
+        pickerInput.style.left = '-9999px';
+
+        document.body.appendChild(pickerInput);
+
+        const cleanup = () => {
+            pickerInput.removeEventListener('change', onChange);
+            pickerInput.removeEventListener('blur', onBlur);
+            pickerInput.remove();
+        };
+
+        const onChange = () => {
+            if (!pickerInput.value) {
+                cleanup();
+                return;
+            }
+
+            const parsedDate = new Date(pickerInput.value);
+            if (Number.isNaN(parsedDate.getTime())) {
+                cleanup();
+                return;
+            }
+
+            this.applyNewPurchaseDate(parsedDate);
+            cleanup();
+        };
+
+        const onBlur = () => {
+            cleanup();
+        };
+
+        pickerInput.addEventListener('change', onChange);
+        pickerInput.addEventListener('blur', onBlur);
+
+        if (typeof pickerInput.showPicker === 'function') {
+            pickerInput.showPicker();
+            return;
         }
 
-        return parsed;
+        pickerInput.focus();
+        pickerInput.click();
     },
 
     syncSecondsWithPhoneTime() {

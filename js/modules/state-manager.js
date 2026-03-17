@@ -105,7 +105,9 @@ export const StateManager = {
             return {
                 startTime: session.startTime,
                 elapsedSeconds: 30,
-                initialDateTime: session.initialDateTime
+                initialDateTime: session.initialDateTime,
+                purchaseTimestamp: session.purchaseTimestamp,
+                offsetSeconds: session.offsetSeconds
             };
         }
 
