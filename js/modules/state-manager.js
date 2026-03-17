@@ -77,10 +77,13 @@ export const StateManager = {
 
     startSession() {
         const tabId = this.getTabId();
+        const nowIso = new Date().toISOString();
+        const purchaseTimestamp = Date.now();
         const session = {
-            startTime: new Date().toISOString(),
-            startTimestamp: Date.now(),
-            initialDateTime: new Date().toISOString(),
+            startTime: nowIso,
+            purchaseTimestamp,
+            initialDateTime: nowIso,
+            offsetSeconds: 30,
             tabId: tabId
         };
 
@@ -106,15 +109,33 @@ export const StateManager = {
             };
         }
 
+        const purchaseTimestamp = session.purchaseTimestamp || session.startTimestamp;
+        const offsetSeconds = Number.isFinite(session.offsetSeconds) ? session.offsetSeconds : 30;
         const now = Date.now();
-        const elapsedMs = now - session.startTimestamp;
-        const elapsedSeconds = Math.floor(elapsedMs / 1000) + 30;
+        const elapsedMs = now - purchaseTimestamp;
+        const elapsedSeconds = Math.max(offsetSeconds, Math.floor(elapsedMs / 1000) + offsetSeconds);
 
         return {
             startTime: session.startTime,
             elapsedSeconds: elapsedSeconds,
-            initialDateTime: session.initialDateTime
+            initialDateTime: session.initialDateTime,
+            purchaseTimestamp,
+            offsetSeconds
         };
+    },
+
+    saveSessionData(data) {
+        const session = this.getSession();
+        if (!session) return;
+
+        try {
+            localStorage.setItem(this.SESSION_KEY, JSON.stringify({
+                ...session,
+                ...data
+            }));
+        } catch (e) {
+            console.error('Session update error:', e);
+        }
     },
 
     clearSession() {
