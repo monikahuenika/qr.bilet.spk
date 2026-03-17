@@ -3,21 +3,14 @@ import { StateManager } from './state-manager.js';
 
 export const RouteEditor = {
     routeNumberDisplay: null,
-    routeNumberInput: null,
     textRedactor: null,
 
     init() {
         this.routeNumberDisplay = document.getElementById('numberCar');
-        this.routeNumberInput = document.getElementById('impunFl');
         this.textRedactor = document.getElementById('textRedactor');
 
         if (this.textRedactor) {
-            this.textRedactor.addEventListener('click', () => this.show());
-        }
-
-        if (this.routeNumberInput) {
-            this.routeNumberInput.addEventListener('input', () => this.updateDisplay());
-            this.routeNumberInput.addEventListener('blur', () => this.hide());
+            this.textRedactor.addEventListener('click', () => this.openEditor());
         }
 
         this.restoreFromState();
@@ -30,35 +23,24 @@ export const RouteEditor = {
         }
     },
 
-    show() {
-        if (!this.routeNumberInput || !this.routeNumberDisplay) return;
+    openEditor() {
+        if (!this.routeNumberDisplay) return;
 
-        this.routeNumberInput.style.display = 'block';
-        this.routeNumberInput.value = this.routeNumberDisplay.textContent.trim();
-        this.routeNumberInput.focus();
-        this.routeNumberDisplay.style.display = 'none';
-    },
+        const currentValue = this.routeNumberDisplay.textContent.trim();
+        const userValue = window.prompt('Введите номер транспорта', currentValue);
 
-    hide() {
-        if (!this.routeNumberInput || !this.routeNumberDisplay) return;
+        if (userValue === null) return;
 
-        this.routeNumberInput.style.display = 'none';
-        this.routeNumberDisplay.style.display = 'block';
-    },
+        const newRouteNumber = userValue.trim();
+        if (!newRouteNumber) return;
 
-    updateDisplay() {
-        if (!this.routeNumberInput || !this.routeNumberDisplay) return;
-
-        const newRouteNumber = this.routeNumberInput.value;
         this.routeNumberDisplay.textContent = newRouteNumber;
-
         StateManager.saveRouteNumber(newRouteNumber);
 
         const transportTypeDisplay = document.getElementById('car');
         if (transportTypeDisplay) {
             const transport = transportTypeDisplay.innerText.replace(':', '').trim();
-            const route = this.routeNumberDisplay.textContent.trim();
-            TCRulesManager.update(transport, route);
+            TCRulesManager.update(transport, newRouteNumber);
         }
     },
 
