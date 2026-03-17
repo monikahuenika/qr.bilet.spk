@@ -18,8 +18,19 @@ export const TransportSelector = {
         ];
 
         if (this.transportTypeDisplay) {
-            this.transportTypeDisplay.addEventListener('click', () => this.openMenu());
+            this.transportTypeDisplay.addEventListener('click', (event) => {
+                event.stopPropagation();
+                this.toggleMenu();
+            });
         }
+
+        if (this.transportTypeMenu) {
+            this.transportTypeMenu.addEventListener('click', (event) => {
+                event.stopPropagation();
+            });
+        }
+
+        document.addEventListener('click', () => this.closeMenu());
 
         this.buttons.forEach(({ element, name }) => {
             if (element) {
@@ -40,9 +51,28 @@ export const TransportSelector = {
         }
     },
 
+    isMenuOpen() {
+        return this.transportTypeMenu?.style.display === 'flex';
+    },
+
+    toggleMenu() {
+        if (this.isMenuOpen()) {
+            this.closeMenu();
+            return;
+        }
+
+        this.openMenu();
+    },
+
     openMenu() {
         if (this.transportTypeMenu) {
             this.transportTypeMenu.style.display = 'flex';
+        }
+    },
+
+    closeMenu() {
+        if (this.transportTypeMenu) {
+            this.transportTypeMenu.style.display = 'none';
         }
     },
 
@@ -51,9 +81,7 @@ export const TransportSelector = {
             this.transportTypeDisplay.innerText = transportName;
         }
 
-        if (this.transportTypeMenu) {
-            this.transportTypeMenu.style.display = 'none';
-        }
+        this.closeMenu();
 
         StateManager.saveTransportType(transportName);
 
