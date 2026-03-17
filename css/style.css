@@ -50,6 +50,14 @@
 }
 
 /* === BASE STYLES === */
+html {
+    height: 100%;
+    overflow: auto;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    touch-action: manipulation;
+}
+
 body{
     position: relative;
     background: var(--color-primary-light);
@@ -58,6 +66,8 @@ body{
     margin: 0%;
     font-family: var(--font-primary);
     letter-spacing: 0.3px;
+    min-height: 100%;
+    touch-action: manipulation;
 }
 main{
     width: 100%;
@@ -309,6 +319,7 @@ main{
     outline: none;
     font-size: 22px;
     display: none;
+    touch-action: manipulation;
 }
 .menuCar{
     display: none;
@@ -393,7 +404,7 @@ main{
     padding: 12px;
     border: 2px solid var(--color-text-light);
     border-radius: var(--border-radius-sm);
-    font-size: var(--font-size-md);
+    font-size: 16px;
     font-family: var(--font-display);
     font-weight: 600;
     color: var(--color-text-dark);
@@ -401,6 +412,7 @@ main{
     outline: none;
     box-sizing: border-box;
     margin-bottom: 15px;
+    touch-action: manipulation;
 }
 
 .tcEditorInput:focus {
