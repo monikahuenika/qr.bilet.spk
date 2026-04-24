@@ -13,7 +13,7 @@ export const TransportSelector = {
 
         this.buttons = [
             { element: document.getElementById('btnMenuOne'), name: 'Трамвай' },
-            { element: document.getElementById('btnMenuTwo'), name: 'Тролейбус' },
+            { element: document.getElementById('btnMenuTwo'), name: 'Троллейбус' },
             { element: document.getElementById('btnMenuThree'), name: 'Автобус' }
         ];
 
