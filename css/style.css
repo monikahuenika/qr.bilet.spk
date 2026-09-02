@@ -323,9 +323,10 @@ main.head {
     width: 100%;
 }
 .QR-code img {
-    width: 360px;
-    max-width: 360px;
-    height: 360px;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
     display: block;
 }
 
