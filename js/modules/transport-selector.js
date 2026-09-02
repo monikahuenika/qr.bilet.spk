@@ -44,7 +44,7 @@ export const TransportSelector = {
     restoreFromState() {
         const state = StateManager.getState();
         if (state.transportType && this.transportTypeDisplay) {
-            this.transportTypeDisplay.innerText = state.transportType;
+            this.transportTypeDisplay.innerText = state.transportType + ':';
 
             const route = RouteEditor.getCurrentRoute();
             TCRulesManager.update(state.transportType, route);
@@ -81,7 +81,7 @@ export const TransportSelector = {
 
     select(transportName) {
         if (this.transportTypeDisplay) {
-            this.transportTypeDisplay.innerText = transportName;
+            this.transportTypeDisplay.innerText = transportName + ':';
         }
 
         this.closeMenu();

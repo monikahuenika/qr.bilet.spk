@@ -1,9 +1,11 @@
-const CACHE_VERSION = "v13";
+const CACHE_VERSION = "v36";
 const CACHE_NAME = `qr-bilet-${CACHE_VERSION}`;
 const ASSETS = [
     "./",
     "./index.html",
     "./manifest.webmanifest",
+    "./fonts/circe-bold.woff2",
+    "./fonts/circe-regular.woff2",
     "./css/style.css",
     "./js/app.js",
     "./js/modules/overlay.js",

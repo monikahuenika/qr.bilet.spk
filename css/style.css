@@ -1,360 +1,451 @@
-/* === CSS VARIABLES === */
-:root {
-    /* Colors - Primary */
-    --color-primary-dark: #1d1346;
-    --color-primary-light: #F5F1E8;
+/* ============================================================
+   QR.Bilet.SPK — стили по визуальному образцу qr.bilet.nspk.ru/result
+   Функциональные ID/классы сохранены; изменён только presentation-слой.
+   ============================================================ */
 
-    /* Colors - Text */
-    --color-text-dark: rgb(33, 7, 80);
-    --color-text-medium: rgb(31, 7, 75);
-    --color-text-accent: rgb(25, 7, 73);
-    --color-text-accent-dark: rgb(23, 6, 68);
-    --color-text-accent-darker: rgb(21, 5, 65);
-    --color-text-light: rgba(170, 170, 170, 0.863);
-
-    /* Colors - Buttons */
-    --color-button-primary: rgb(59, 158, 39);
-    --color-button-success: rgb(57, 180, 33);
-
-    /* Colors - Backgrounds */
-    --color-bg-box: rgb(248, 250, 239);
-    --color-overlay: rgba(48, 31, 61, 0.603);
-
-    /* Typography */
-    --font-primary: 'Calibri', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --font-display: 'Circle', 'Roboto', sans-serif;
-
-    /* Font Sizes */
-    --font-size-xs: 95%;
-    --font-size-sm: 16px;
-    --font-size-md: 19px;
-    --font-size-lg: 105%;
-    --font-size-xl: 120%;
-    --font-size-xxl: 175%;
-    --font-size-huge: 250%;
-
-    /* Spacing */
-    --spacing-xs: 5px;
-    --spacing-sm: 15px;
-    --spacing-md: 27px;
-    --spacing-lg: 3.5%;
-
-    /* Border Radius */
-    --border-radius: 8px;
-    --border-radius-sm: 7px;
-
-    /* Z-index Layers */
-    --z-overlay: 22;
-    --z-modal: 1000;
-    --z-button: 2000;
+/* Шрифт Circe (как в референсе) — bold 700 и regular 400 */
+@font-face {
+    font-family: 'Circe';
+    src: url('../fonts/circe-bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Circe';
+    src: url('../fonts/circe-regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
 }
 
-/* === BASE STYLES === */
+:root {
+    /* Колор-токены референса */
+    --color-primary: #209FFF;            /* синяя плашка шапки / конец градиента кнопок */
+    --color-secondary: #0BD3D6;          /* голубой старт градиента кнопок */
+    --color-bg: #F2F3F4;                 /* фон страницы */
+    --color-text: #424142;               /* основной текст */
+    --color-text-muted: #6a6a6a;         /* приглушённый текст (Т/С и подписи) */
+    --color-white: #FFFFFF;
+
+    --gradient-btn: linear-gradient(180deg, var(--color-secondary) 0%, var(--color-primary) 99%);
+    --shadow-btn: 0 20px 40px 7px rgba(0, 0, 0, 0.11);
+    --shadow-sheet: 0 -8px 32px rgba(0, 0, 0, 0.12);
+
+    --font-primary: 'Circe', sans-serif;
+
+    --radius-btn: 16px;
+    --radius-sm: 10px;
+
+    --header-height: 120px;
+}
+
+/* === BASE === */
+* {
+    box-sizing: border-box;
+}
+
 html {
     height: 100%;
-    overflow: auto;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     touch-action: manipulation;
 }
 
-body{
-    position: relative;
-    background: var(--color-primary-light);
-    display: flex;
-    justify-content: center;
-    margin: 0%;
-    font-family: var(--font-primary);
-    letter-spacing: 0.3px;
+body {
+    margin: 0;
     min-height: 100%;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-primary);
     touch-action: manipulation;
 }
-main{
-    width: 100%;
+
+/* Контейнер приложения: шапка на всю ширину, контент центрирован */
+main.head {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-}
-.box-head{
     width: 100%;
-    display: flex;
-    margin: 0%;
-    padding-bottom: 1%;
-    justify-content: center;
-    align-items: center;
-    color: var(--color-primary-light);
-    background: var(--color-primary-dark);
-    font-size: var(--font-size-lg);
-    letter-spacing: 0.2px;
-    font-weight: 550;
-    height: 56px;
+    min-height: 100vh;
 }
-.imgSbp{
-    display: flex;
-    justify-content: center;
-}
-.imgSbp img{
-    margin-top: 5.38%;
-    margin-bottom: 7%;
-    width: 32.8%;
-}
-.winBay{
-    color: var(--color-text-medium);
-    text-align: center;
-    font-size: var(--font-size-lg);
-    margin-bottom: 9.05%;
-    font-weight: 500;
-}
-.busNumber{
-    display: flex;
-    justify-content: center;
-}
-#car{
-    cursor: pointer;
-    display: flex;
-    font-size: var(--font-size-xl);
-    color: var(--color-text-medium);
-    font-weight: 570;
-    letter-spacing: 0.5px;
-}
-.numberRub{
-    margin-top: 0.7%;
-    margin-bottom: 1.45%;
-    font-family: var(--font-display);
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    font-size: var(--font-size-huge);
-    font-weight: 600;
-    color: var(--color-text-accent-dark);
-}
-.twoNine{
-    font-family: var(--font-display);
-    font-weight: 200;
-    font-size: 100%;
-}
-.dataAndNowTime{
-    margin-top: 3.1%;
-    letter-spacing: 0.2px;
-    font-family: var(--font-display);
-    font-size: var(--font-size-lg);
-    font-weight: 450;
-    text-align: center;
-    color: var(--color-text-medium);
-}
-.tc{
-    margin-top: 0.8%;
-    color: var(--color-text-light);
-    text-align: center;
-    font-size: var(--font-size-xs);
-    font-weight: 500;
-    cursor: pointer;
-}
-#tcValue{
-    cursor: pointer;
-}
-.timeOldText{
-    color: var(--color-text-dark);
-    margin-top: 9%;
-    font-size: var(--font-size-lg);
-    font-weight: 500;
-    text-align: center ;
-    letter-spacing: 0.2px;
-}
-.timeOldNumber{
-    cursor: pointer;
-    font-family: var(--font-display);
-    text-align: center;
-    color: var(--color-text-accent);
-    font-weight: 600;
-    font-size: var(--font-size-xxl);
-}
-.QR-code{
-    margin-top: 3.5%;
-    display: flex;
-    justify-content: center;
-    z-index: 1;
-    width: 100%;
-    height: 23em;
-    background: var(--color-primary-light);
-}
-.QR-code img{
-    width: 94%;
-    margin-left: 3%;
-    margin-right: 3%;
-    height: 100%;
-}
-.seriesTikets{
-    text-align: center;
-    color: var(--color-text-dark);
-    font-size: var(--font-size-md);
-    font-weight: 500;
-    letter-spacing: 0.2px;
-}
-.numberSeriesTikets{
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 600;
-}
-.numberTiket{
-    text-align: center;
-    color: var(--color-text-dark);
-    font-size: var(--font-size-md);
-    font-weight: 500;
-    letter-spacing: 0.2px;
-}
-.numberTiketNam{
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 600;
-}
-.textFooter{
-    text-align: center;
-    color: var(--color-text-dark);
-    font-size: var(--font-size-md);
-    font-weight: 500;
-    letter-spacing: 0.2px;
-    margin-top: var(--spacing-md);
-}
-.btnSaveTiketClass{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-.btnSaveTiket{
-    margin-top: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
-    cursor: pointer;
-    padding-left: 2%;
-    padding-right: 2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 96%;
-    height: 45px;
-    background: var(--color-button-primary);
-    font-size: var(--font-size-sm);
-    font-weight: 400;
-    letter-spacing: 0.4px;
-    border-radius: var(--border-radius);
-    color: aliceblue;
-    border: none;
-}
-.boxStartQr {
-    display: flex;
-    color: black;
-    font-size: 77%;
-    font-weight: 600;
+
+/* === ШАПКА (точная копия референса) === */
+.box-head {
     position: relative;
-}
-.btnSaveTiketClassStart {
-    border-top-left-radius: var(--border-radius-sm);
-    border-top-right-radius: var(--border-radius-sm);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    background: var(--color-bg-box);
-    height: 19.5%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    overflow: hidden;
+    flex-shrink: 0;
     width: 100%;
-    z-index: var(--z-modal);
-}
-.btnSaveTiketClassStartText{
-    margin-bottom: 3px;
-    padding: 0;
-}
-.btnSaveTiketClassStartTextTwo {
-    margin-bottom: 20px;
-    padding: 0;
-}
-.btnSaveTiketStart {
-    cursor: pointer;
-    padding-left: 3%;
-    padding-right: 3%;
+    height: var(--header-height);
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 94%;
-    height: 32%;
-    background-color: var(--color-button-success);
-    font-size: var(--font-size-sm);
-    font-weight: 450;
-    letter-spacing: 0.7px;
-    border-radius: var(--border-radius);
-    color: aliceblue;
-    border: none;
-    z-index: var(--z-button);
-    margin-left: 3%;
-    margin-right: 3%;
+    justify-content: center;
+    background: var(--color-primary);
+    color: var(--color-white);
+    font-size: 20px;
+    font-weight: 400;
+    padding: 20px;
+    text-align: center;
 }
-.colorFonts{
-    display: flex;
+/* Тёмно-синяя волна в правом верхнем углу плашки */
+.box-head::before {
+    content: "";
+    position: absolute;
     top: 0;
     left: 0;
-    position: fixed;
-    z-index: var(--z-overlay);
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: url("../img/header-top-part-SBMOWKGP.svg") no-repeat 100% 0%;
+}
+/* Изогнутый нижний край плашки (bottom-part, как в референсе: 100% auto, высота ~49px) */
+.box-head::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    display: block;
+    height: 49px;
+    background:
+        url("../img/header-bottom-part-U3DIKSH2.svg") no-repeat 50% 100% / 100% auto,
+        linear-gradient(rgba(0, 0, 0, 0) 50%, #F2F3F4 50%);
+}
+/* Заголовок поверх декоративного слоя + линии по бокам (как в референсе) */
+.box-head__title {
+    position: relative;
+    z-index: 5;
+    margin: 0;
+    padding: 0 23px;
+    font-size: 20px;
+    font-weight: 400;
+    font-family: var(--font-primary);
+    color: var(--color-white);
+    line-height: 25px;
+    text-align: start;
+    letter-spacing: normal;
+}
+.box-head__title::before,
+.box-head__title::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 1px;
+    background: #fff;
+}
+.box-head__title::before {
+    left: 0;
+}
+.box-head__title::after {
+    right: 0;
+}
+
+/* === КОНТЕНТ === */
+.ticket-body {
     width: 100%;
-    height: 100%;
-    background: var(--color-overlay);
-    pointer-events: none;
-}
-#textRedactor{
-    width: 50px;
-    height: 22px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
     display: flex;
-    cursor: text;
-    border: none;
-    font-size: 119%;
-    font-family: var(--font-display);
-    font-weight: 600;
-    letter-spacing: 0.0px;
-    color: var(--color-text-accent-darker);
+    flex-direction: column;
+    align-items: center;
 }
-#impunFl{
+
+/* Логотип СБП (в референсе отсутствует — скрыт) */
+.imgSbp {
+    display: none;
+}
+
+/* Успех */
+.winBay {
+    color: var(--color-text);
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0 0 39px;
+}
+
+/* Тип и номер транспорта (референс: 700/20px/24px/0.36px) */
+.busNumber {
+    box-sizing: border-box;
+    display: block;
+    width: fit-content;
+    margin: 0 auto 6px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+    height: 24px;
+    letter-spacing: 0.36px;
+    color: var(--color-text);
+    text-align: start;
+}
+#car {
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--color-text);
+    font-weight: 700;
+    letter-spacing: 0.36px;
+}
+#textRedactor {
+    display: inline;
+    cursor: text;
+    font-family: var(--font-primary);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.36px;
+    color: var(--color-text);
+}
+#impunFl {
     width: 100px;
     border: none;
     outline: none;
-    font-size: 22px;
+    font-size: 20px;
     display: none;
     touch-action: manipulation;
 }
-.menuCar{
+
+/* Меню выбора транспорта (dropdown) */
+.menuCar {
     display: none;
-    width: 100%;
-    height: 90px;
     flex-direction: column;
-}
-.btnMenu{
-    cursor: pointer;
-    display: flex;
-    border: none;
-    border-radius: var(--border-radius);
-    font-size: 21px;
-    color: var(--color-text-medium);
-    font-weight: 550;
-    letter-spacing: 0.3px;
-    margin-top: var(--spacing-xs);
     align-items: center;
-    width: 35%;
-    margin-left: 28%;
-    height: 24px;
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+    padding: 16px;
+    margin: 12px 0 4px;
+}
+.btnMenu {
+    cursor: pointer;
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--color-white);
+    color: var(--color-text);
+    font-size: 18px;
+    font-weight: 400;
+    font-family: var(--font-primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+.btnMenu:hover {
+    background: #e8f6ff;
+}
+.btnMenu:active {
+    transform: scale(0.99);
 }
 
-/* инпут для редактирования Т/С */
-#tcInput{
+/* Цена (референс: 700/48px/54px/0.36px; ₽ — 400) */
+.numberRub {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    font-family: var(--font-primary);
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 54px;
+    letter-spacing: 0.36px;
+    margin: 0 0 17px;
+}
+.twoNine {
+    font-weight: 400;
+    font-size: 100%;
+}
+
+/* Дата/время покупки (референс: 400/18px/24px, letter-spacing 0.36px) */
+.dataAndNowTime {
+    cursor: pointer;
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: 0.36px;
+    text-align: center;
+    color: var(--color-text);
+}
+
+/* Т/С (референс: метка «Т/С:» 300, значение 350; 16px/24px/0.36px) */
+.tc {
+    color: var(--color-text);
+    text-align: center;
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 0.36px;
+    line-height: 24px;
+    cursor: pointer;
+}
+#tcValue {
+    cursor: pointer;
+    font-weight: 350;
+}
+#tcInput {
     display: none;
     width: 80px;
     border: none;
     outline: none;
-    font-size: var(--font-size-xs);
-    font-family: var(--font-display);
-    font-weight: 600;
+    font-size: 16px;
+    font-family: var(--font-primary);
     background: transparent;
     text-align: left;
-    color: var(--color-text-dark);
+    color: var(--color-text);
+}
+
+/* Таймер «с момента оплаты прошло» (референс: подпись 400/18px/24px, число 700/32px/32px) */
+.timeOldText {
+    color: var(--color-text);
+    margin-top: 34px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: center;
+}
+.timeOldNumber {
+    cursor: pointer;
+    font-family: var(--font-primary);
+    text-align: center;
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 32px;
+}
+
+/* QR-код */
+.QR-code {
+    margin: 31px 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.QR-code img {
+    width: 335px;
+    max-width: 335px;
+    height: 335px;
+    display: block;
+}
+
+/* Серия и номер билета (референс: подпись 400/18px/24px, значение 700/18px) */
+.seriesTikets,
+.numberTiket {
+    text-align: center;
+    color: var(--color-text);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+}
+.numberSeriesTikets,
+.numberTiketNam {
+    font-family: var(--font-primary);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+}
+
+/* Подсказка (референс: 400/18px/24px) */
+.textFooter {
+    text-align: center;
+    color: var(--color-text);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-top: 28px;
+}
+.textFooterTwo,
+.textFooterThree {
+    margin-top: 2px;
+}
+
+/* Кнопка «Скачать билет» */
+.btnSaveTiketClass {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 32px;
+}
+.btnSaveTiket {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 55px;
+    padding: 0 24px;
+    background: var(--gradient-btn);
+    color: var(--color-white);
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    border: none;
+    border-radius: var(--radius-btn);
+    box-shadow: var(--shadow-btn);
+    transition: filter 0.15s ease, transform 0.1s ease;
+}
+.btnSaveTiket:hover {
+    filter: brightness(1.04);
+}
+.btnSaveTiket:active {
+    transform: translateY(1px);
+}
+
+/* === БЛОК «Сохранить билет» (в потоке, как в референсе) === */
+.boxStartQr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 24px 0 0;
+}
+.btnSaveTiketClassStart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: var(--color-white);
+    border-radius: var(--radius-btn);
+    padding: 24px 20px 28px;
+    width: 100%;
+    box-shadow: var(--shadow-sheet);
+}
+.btnSaveTiketClassStartText {
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 4px;
+}
+.btnSaveTiketClassStartTextTwo {
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 20px;
+}
+.btnSaveTiketStart {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 55px;
+    padding: 0 24px;
+    background: var(--gradient-btn);
+    color: var(--color-white);
+    font-size: 16px;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    border: none;
+    border-radius: var(--radius-btn);
+    box-shadow: var(--shadow-btn);
+    transition: filter 0.15s ease;
+}
+.btnSaveTiketStart:hover {
+    filter: brightness(1.04);
 }
 
 /* === МОДАЛЬНОЕ ОКНО РЕДАКТИРОВАНИЯ Т/С === */
@@ -365,83 +456,101 @@ main{
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: var(--z-modal);
+    z-index: 1000;
 }
-
 .tcEditorOverlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--color-overlay);
+    background: rgba(0, 0, 0, 0.4);
 }
-
 .tcEditorContent {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--color-bg-box);
-    border-radius: var(--border-radius);
-    padding: 20px;
+    background: var(--color-white);
+    border-radius: var(--radius-btn);
+    padding: 24px 20px;
     width: 85%;
-    max-width: 320px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    max-width: 340px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
 }
-
 .tcEditorTitle {
-    color: var(--color-text-dark);
-    font-size: var(--font-size-md);
-    font-weight: 550;
+    color: var(--color-text);
+    font-size: 18px;
+    font-weight: 500;
     text-align: center;
-    margin-bottom: 15px;
-    letter-spacing: 0.3px;
+    margin-bottom: 18px;
+    letter-spacing: 0.2px;
 }
-
 .tcEditorInput {
     width: 100%;
-    padding: 12px;
-    border: 2px solid var(--color-text-light);
-    border-radius: var(--border-radius-sm);
-    font-size: 16px;
-    font-family: var(--font-display);
+    padding: 14px;
+    border: 2px solid rgba(66, 65, 66, 0.2);
+    border-radius: var(--radius-sm);
+    font-size: 18px;
+    font-family: var(--font-primary);
     font-weight: 600;
-    color: var(--color-text-dark);
+    color: var(--color-text);
     text-align: center;
     outline: none;
     box-sizing: border-box;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     touch-action: manipulation;
 }
-
 .tcEditorInput:focus {
-    border-color: var(--color-button-primary);
+    border-color: var(--color-primary);
 }
-
 .tcEditorButtons {
     display: flex;
     gap: 10px;
     justify-content: space-between;
 }
-
 .tcEditorBtn {
     flex: 1;
-    padding: 12px;
+    padding: 14px;
     border: none;
-    border-radius: var(--border-radius-sm);
-    font-size: var(--font-size-sm);
+    border-radius: var(--radius-btn);
+    font-size: 16px;
     font-weight: 500;
+    font-family: var(--font-primary);
     cursor: pointer;
     letter-spacing: 0.3px;
+    transition: filter 0.15s ease;
 }
-
 .tcEditorBtnCancel {
-    background: #e0e0e0;
-    color: var(--color-text-dark);
+    background: #eef0f1;
+    color: var(--color-text);
+}
+.tcEditorBtnCancel:hover {
+    filter: brightness(0.97);
+}
+.tcEditorBtnSave {
+    background: var(--gradient-btn);
+    color: var(--color-white);
+    font-weight: 700;
+}
+.tcEditorBtnSave:hover {
+    filter: brightness(1.04);
 }
 
-.tcEditorBtnSave {
-    background: var(--color-button-primary);
-    color: aliceblue;
+/* === АДАПТИВНОСТЬ === */
+/* Телефон по умолчанию — см. базовые стили выше. */
+
+/* Планшет */
+@media (min-width: 768px) {
+    .btnSaveTiket,
+    .btnSaveTiketStart {
+        width: 100%;
+    }
+}
+
+/* Десктоп */
+@media (min-width: 1200px) {
+    .btnSaveTiketClass {
+        max-width: 1168px;
+    }
 }

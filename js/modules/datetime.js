@@ -242,9 +242,11 @@ export const DateTimeManager = {
     updateTimerDisplay() {
         if (!this.timeOldNumber) return;
 
-        const minutes = Math.floor(this.seconds / 60);
+        const pad = (n) => String(n).padStart(2, '0');
+        const hours = Math.floor(this.seconds / 3600);
+        const minutes = Math.floor((this.seconds % 3600) / 60);
         const secs = this.seconds % 60;
-        const timeString = `${minutes}:${String(secs).padStart(2, '0')}`;
+        const timeString = `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
 
         this.timeOldNumber.innerText = timeString;
     },
